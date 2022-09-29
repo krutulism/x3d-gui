@@ -18,7 +18,7 @@ axes = np.zeros(4)
 try:
     while True:
         events = pygame.event.get()
-        
+
         for event in events:
             if event.type == pygame.JOYBUTTONDOWN:
                 b = event.button
@@ -27,10 +27,15 @@ try:
                 print('Button Released')
             elif event.type == pygame.JOYAXISMOTION:
                 axes[event.axis] = event.value
+            elif event.type == pygame.JOYHATMOTION:
+                #Horiz axis at index [0]. -1 for L. 1 for R.
+                #Vert axis at index [1]. -1 for D. 1 for U.
+                print(event.value)
         
         flag += 1
         if flag % 200000 == 0:
-            print(axes)
+            pass
+            #print(axes)
 
 
 except KeyboardInterrupt:
