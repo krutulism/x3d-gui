@@ -39,6 +39,6 @@ try:
 
 
 except KeyboardInterrupt:
-    print("Goodbye")
+    print("Exiting")
     j.quit()
     pygame.joystick.quit()
