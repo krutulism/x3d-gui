@@ -28,13 +28,16 @@ def main():
 
 
 class Panel(pygame.Rect):
-    def __init__(self, dimensions, position, label, value):
-        super().__init__()
-        self.pos = position
-        self.dims = dimensions
+    def __init__(self, pos, dims, label, value, baseColor, activeColor):
+        super().__init__(pos, dims)
         self.label = label
         self.value = value
-        
+        self.baseColor = baseColor
+        self.activeColor = activeColor
+        self.color = baseColor
+
+    def depressed(self):
+        pass
 
 if __name__=='__main__':
     main()
