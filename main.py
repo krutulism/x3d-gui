@@ -11,19 +11,27 @@ def main():
     running = True
 
 
-    rect = pygame.Rect(20,40,60,80)
-    pygame.draw.rect(surface, (0,127,127),rect)
+    rect1 = pygame.Rect(20,40,60,80)
+    rect2 = pygame.Rect(120,140,60,80)
+
+    pygame.draw.rect(surface, (0,127,127),rect1)
+    pygame.draw.rect(surface, (127,127,0), rect2)
+
+    pygame.display.flip()
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
-            
-
-        
-
-
-
-        pygame.display.flip()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_g:
+                    pygame.draw.rect(surface, (255,0,0), rect1)
+                    pygame.display.update(rect1)
+                    pygame.draw.rect(surface, (255,0,0), rect2)
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_g:
+                    pygame.draw.rect(surface, (0,127,127), rect1)
+                    pygame.display.update(rect1)
+                    pygame.draw.rect(surface, (127,127,0), rect2)
 
 
 
