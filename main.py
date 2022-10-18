@@ -6,46 +6,68 @@ def main():
 
     pygame.init()
 
-    surface = pygame.display.set_mode([500, 500])
+    surface = pygame.display.set_mode([800, 600])
 
     running = True
 
 
-    rect1 = pygame.Rect(20,40,60,80)
-    rect2 = pygame.Rect(120,140,60,80)
+    # rect1 = pygame.Rect(20,40,60,80)
+    # rect2 = pygame.Rect(120,140,60,80)
 
-    pygame.draw.rect(surface, (0,127,127),rect1)
-    pygame.draw.rect(surface, (127,127,0), rect2)
+    # pygame.draw.rect(surface, (0,127,127),rect1)
+    # pygame.draw.rect(surface, (127,127,0), rect2)
 
-    pygame.display.flip()
+    drawPanes(surface)
+
+    pygame.display.update()
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_g:
-                    pygame.draw.rect(surface, (255,0,0), rect1)
-                    pygame.display.update(rect1)
-                    pygame.draw.rect(surface, (255,0,0), rect2)
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_g:
-                    pygame.draw.rect(surface, (0,127,127), rect1)
-                    pygame.display.update(rect1)
-                    pygame.draw.rect(surface, (127,127,0), rect2)
+            elif event.type == pygame.KEYDOWN: pass
+                # if event.key == pygame.K_g:
+                #     pygame.draw.rect(surface, (255,0,0), rect1)
+                #     pygame.display.update(rect1)
+                #     pygame.draw.rect(surface, (255,0,0), rect2)
+                #     pygame.display.update(rect2)
+            elif event.type == pygame.KEYUP: pass
+                # if event.key == pygame.K_g:
+                #     pygame.draw.rect(surface, (0,127,127), rect1)
+                #     pygame.display.update(rect1)
+                #     pygame.draw.rect(surface, (127,127,0), rect2)
+                #     pygame.display.update(rect2)
 
+def drawPanes(surface):
+    #Coordinates to help draw grid of indicators
+    hBtn = [*range(10,561,50)]
+    vBtn = 60
+    btnDims = (200, 30)
+    hAx = [80, 200, 320, 440]
+    vAx = 320
+    axDims = (160, 80)
+    hHat = [180, 270, 360]
+    vHat = [530, 615, 700]
+    hatDims = (60, 60)
 
+    btnPanes = []
+    for i in range(0,len(hBtn)):
+        rect = pygame.Rect(vBtn, hBtn[i], btnDims[0], btnDims[1])
+        btnPanes.append(rect)
+        pygame.draw.rect(surface, (127,127,0), rect)
 
-class Panel(pygame.Rect):
-    def __init__(self, pos, dims, label, value, baseColor, activeColor):
-        super().__init__(pos, dims)
-        self.label = label
-        self.value = value
-        self.baseColor = baseColor
-        self.activeColor = activeColor
-        self.color = baseColor
+    axPanes = []
+    for i in range(0,len(hAx)):
+        rect = pygame.Rect(vAx, hAx[i], axDims[0], axDims[1])
+        axPanes.append(rect)
+        pygame.draw.rect(surface, (127,127,0), rect)
 
-    def depressed(self):
-        pass
+    hatPanes = []
+    for i in range(0,3):
+        for j in range(0,3):
+            rect = pygame.Rect(vHat[i], hHat[j], hatDims[0], hatDims[1])
+            hatPanes.append(rect)
+            pygame.draw.rect(surface, (0, 127, 127), rect)
+
 
 if __name__=='__main__':
     main()
