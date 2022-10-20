@@ -6,11 +6,24 @@ def main():
 
     pygame.init()
 
-    surface = pygame.display.set_mode([800, 600])
+    W = 800
+    H = 600
+
+    surface = pygame.display.set_mode([W, H])
+    pygame.display.set_caption("X3D GUI")
+
+    myfont = pygame.freetype.SysFont('Helvetica', 11)
+    text = "Hello World"
+    textSize = 11
+
+    textRect = myfont.get_rect(text, size = textSize)
+    textRect.center = (W // 2, H // 2)
+
+    myfont.render_to(surface, textRect, text, (0,0,255), size=textSize)
+
+
 
     running = True
-
-
     # rect1 = pygame.Rect(20,40,60,80)
     # rect2 = pygame.Rect(120,140,60,80)
 
@@ -37,7 +50,7 @@ def main():
                 #     pygame.draw.rect(surface, (127,127,0), rect2)
                 #     pygame.display.update(rect2)
 
-def drawPanes(surface):
+def drawPanes(surface, font):
     #Coordinates to help draw grid of indicators
     hBtn = [*range(10,561,50)]
     vBtn = 60
