@@ -19,24 +19,29 @@ def main():
 
     running = True
 
-    btnPanes, axPanes, hatPanes = drawPanes(surface, myfont)
+    btnPanes, btnLabels, axisPanes, axisLabels, hatPanes, hatLabels = drawPanes(surface, myfont)
 
     pygame.display.update()
 
     while running:
+        updateRects = []
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
             elif event.type == pygame.JOYBUTTONDOWN:
                 b = event.button
-                for i in range(0,12):
-                    if b == i:
-                        print(f'Button {i} depressed')
+                pane = btnPanes[b]
+                print(f'Button {b+1} depressed')
+                pygame.draw.rect(surface, (0,255,0), pane)
+                updateRects.append(pane)
+
+            elif event.type == pygame.JOYBUTTONUP:pass
 
             elif event.type == pygame.JOYAXISMOTION:pass
 
 
             elif event.type == pygame.JOYHATMOTION:pass
 
+        pygame.display.update(updateRects)
 
 def drawPanes(surface, font):
     #Coordinates to help draw grid of indicators
@@ -53,26 +58,31 @@ def drawPanes(surface, font):
     textSize = 14
 
     btnPanes = []
+    btnLabels = []
     for i in range(0,len(hBtn)):
         rect = pygame.Rect(vBtn, hBtn[i], btnDims[0], btnDims[1])
         btnPanes.append(rect)
         pygame.draw.rect(surface, (127,127,0), rect)
 
         text = f'Button  {i+1}'
+        btnLabels.append(text)
         drawLabel(surface, font, rect.center,  text, textSize)
 
-    axPanes = []
+    axisPanes = []
+    axisLabels = []
     for i in range(0,len(hAx)):
         rect = pygame.Rect(vAx, hAx[i], axDims[0], axDims[1])
-        axPanes.append(rect)
+        axisPanes.append(rect)
         pygame.draw.rect(surface, (127,127,0), rect)
 
         text = f'Axis {i+1}'
+        axisLabels.append(text)
         rectcenter = rect.center
         center = (rectcenter[0],rectcenter[1]-30) #Label the top of the pane  
         drawLabel(surface, font, center, text, textSize)
 
     hatPanes = []
+    hatLabels = []
     for i in range(0,3):
         for j in range(0,3):
             rect = pygame.Rect(vHat[i], hHat[j], hatDims[0], hatDims[1])
@@ -80,9 +90,10 @@ def drawPanes(surface, font):
             pygame.draw.rect(surface, (0, 127, 127), rect)
 
             text = f'{i-1},{-(j-1)}'  #Label hat 'axes' in order and by correct value
+            hatLabels.append(text)
             drawLabel(surface, font, rect.center, text, textSize)
 
-    return btnPanes, axPanes, hatPanes
+    return btnPanes, btnLabels, axisPanes, axisLabels, hatPanes, hatLabels
 
 
 def drawLabel(surface, font, center, text, textSize):
