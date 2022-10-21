@@ -13,6 +13,7 @@ def main():
 
     W = 800
     H = 600
+    textSize = 14
     surface = pygame.display.set_mode([W, H])
     pygame.display.set_caption("X3D GUI")
     myfont = pygame.freetype.SysFont('Helvetica', 11)
@@ -30,14 +31,22 @@ def main():
             elif event.type == pygame.JOYBUTTONDOWN:
                 b = event.button
                 pane = btnPanes[b]
-                print(f'Button {b+1} depressed')
                 pygame.draw.rect(surface, (0,255,0), pane)
+                drawLabel(surface, myfont, pane.center, btnLabels[b], textSize)
+
                 updateRects.append(pane)
 
-            elif event.type == pygame.JOYBUTTONUP:pass
+            elif event.type == pygame.JOYBUTTONUP:
+                b = event.button
+                pane = btnPanes[b]
+                pygame.draw.rect(surface, (213,0,42), pane)
+                drawLabel(surface, myfont, pane.center, btnLabels[b], textSize)
 
-            elif event.type == pygame.JOYAXISMOTION:pass
+                updateRects.append(pane)
 
+
+            elif event.type == pygame.JOYAXISMOTION:
+                a = event.axis
 
             elif event.type == pygame.JOYHATMOTION:pass
 
@@ -62,7 +71,7 @@ def drawPanes(surface, font):
     for i in range(0,len(hBtn)):
         rect = pygame.Rect(vBtn, hBtn[i], btnDims[0], btnDims[1])
         btnPanes.append(rect)
-        pygame.draw.rect(surface, (127,127,0), rect)
+        pygame.draw.rect(surface, (213,0,42), rect)
 
         text = f'Button  {i+1}'
         btnLabels.append(text)
@@ -73,7 +82,7 @@ def drawPanes(surface, font):
     for i in range(0,len(hAx)):
         rect = pygame.Rect(vAx, hAx[i], axDims[0], axDims[1])
         axisPanes.append(rect)
-        pygame.draw.rect(surface, (127,127,0), rect)
+        pygame.draw.rect(surface, (213,0,42), rect)
 
         text = f'Axis {i+1}'
         axisLabels.append(text)
@@ -87,7 +96,7 @@ def drawPanes(surface, font):
         for j in range(0,3):
             rect = pygame.Rect(vHat[i], hHat[j], hatDims[0], hatDims[1])
             hatPanes.append(rect)
-            pygame.draw.rect(surface, (0, 127, 127), rect)
+            pygame.draw.rect(surface, (213, 0, 42), rect)
 
             text = f'{i-1},{-(j-1)}'  #Label hat 'axes' in order and by correct value
             hatLabels.append(text)
@@ -100,6 +109,7 @@ def drawLabel(surface, font, center, text, textSize):
     textRect = font.get_rect(text, size=textSize)
     textRect.center = center
     font.render_to(surface, textRect, text, (0,0,255), size=textSize)
+    return textRect
 
 
 if __name__=='__main__':
