@@ -1,6 +1,5 @@
 import pygame
 import sys
-import numpy as np
 
 def main():
     pygame.init()
