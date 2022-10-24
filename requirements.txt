@@ -1,0 +1,3 @@
+certifi @ file:///C:/b/abs_ac29jvt43w/croot/certifi_1665076682579/work/certifi
+pygame==2.1.2
+wincertstore==0.2
