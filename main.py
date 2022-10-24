@@ -65,7 +65,6 @@ def main():
             elif event.type == pygame.JOYHATMOTION:
                 v = event.value #tuple with -1 to 1 for horiz, then -1 to 1 for vert
                 pane = hatPanes[v[0]+1][2-(v[1]+1)]
-                #pygame.draw.rect(surface, (255,255,255), pane)
                 text = hatLabels[v[0]+1][2-(v[1]+1)]
                 textRect = myfont.get_rect(text, size=textSize)
                 pygame.draw.rect(surface, (0,255,0), pane)
@@ -73,12 +72,14 @@ def main():
 
                 updateRects.append(pane)
                 
-                # if hatStatus:
-                #     text = hatLabels[hatStatus[0]+1][hatStatus[1]+1]
-                #     textRect = myfont.get_rect(text, size=textSize)
-                #     pygame.draw.rect(surface, (213,0,42), pane)
-                #     drawLabel(surface, myfont, pane.center, text, textSize, (213,0,42))
-                # hatStatus = (v[0],v[1])
+                if hatStatus is not None:
+                    text = hatLabels[hatStatus[0]+1][2-(hatStatus[1]+1)]
+                    prevPane = hatPanes[hatStatus[0]+1][2-(hatStatus[1]+1)]
+                    textRect = myfont.get_rect(text, size=textSize)
+                    pygame.draw.rect(surface, (213,0,42), prevPane)
+                    drawLabel(surface, myfont, prevPane.center, text, textSize, (213,0,42))
+                    updateRects.append(prevPane)
+                hatStatus = (v[0],v[1])
                 
 
         pygame.display.update(updateRects)
